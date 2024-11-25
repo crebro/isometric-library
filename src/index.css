@@ -48,6 +48,8 @@ button {
 }
 button:hover {
   border-color: #646cff;
+  background-color: white;
+  color: black;
 }
 button:focus,
 button:focus-visible {
@@ -65,4 +67,24 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  box-sizing: border-box;
+  font-family: "Parkinsans";
+  background-color: rgb(220, 220, 220);
+  color: black;
+  transition-duration: 0.3s;
+}
+
+input:focus {
+  border: 1px solid #646cff;
+  background-color: white;
 }

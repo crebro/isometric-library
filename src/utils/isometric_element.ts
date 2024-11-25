@@ -12,6 +12,7 @@ export default class IsometricElement {
     sprite: p5.Image | undefined;
     isometricX: number;
     isometricY: number;
+    isClicked: boolean;
 
     constructor(
         x: number,
@@ -26,6 +27,7 @@ export default class IsometricElement {
         this.verticalBlocks = verticalBlocks;
         this.spriteLoadString = spriteLoadString;
         [this.isometricX, this.isometricY] = screen_to_isometric(this.x, this.y, BLOCKSIZE);
+        this.isClicked = false;
     }
 
     preload(p5: P5CanvasInstance) {
@@ -39,9 +41,35 @@ export default class IsometricElement {
     }
 
     draw(p5: P5CanvasInstance) {
-        if (this.sprite) {
+        if (this.sprite && !this.isClicked) {
             p5.image(this.sprite, this.isometricX, this.isometricY - this.sprite.height);
         }
+    }
+
+    isClickedByPoint(p5:P5CanvasInstance, x: number, y: number) {
+        if (this.isClicked) {
+            return false;
+        }
+
+        if (!this.sprite) {
+            return false;
+        }
+        let insideBoundingBox = x > this.isometricX &&
+            x < this.isometricX + this.sprite.width &&
+            y > this.isometricY - this.sprite.height &&
+            y < this.isometricY;
+        if (!insideBoundingBox) {
+            return false;
+        }
+
+        let pixel = this.sprite.get(x - this.isometricX, y - this.isometricY + this.sprite.height);
+        if (p5.alpha(pixel) < 100) {
+            return false;
+        }
+
+        this.isClicked = true;
+
+        return true;
     }
 }
 
